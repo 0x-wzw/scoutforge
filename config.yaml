@@ -1,0 +1,83 @@
+# ScoutForge Configuration
+# Copy to config.yaml and customize
+
+user:
+  name: "Z"
+  email: "Zehan.teoh@gmail.com"
+
+# API Keys (optional - some sources work without)
+api_keys:
+  huggingface: ""  # HF token for higher rate limits
+  github: ""       # GitHub token for private repos
+  telegram: ""     # Bot token for notifications
+
+# Discovery Sources
+sources:
+  huggingface:
+    enabled: true
+    endpoints:
+      - trending
+      - new
+      - top_downloads
+    
+  github:
+    enabled: true
+    search_queries:
+      - "GGUF OR safetensors created:>2026-03-01"
+      - "llama.cpp inference stars:>100"
+    
+  ollama:
+    enabled: true
+    library_url: "https://ollama.com/library"
+    
+  arxiv:
+    enabled: true
+    categories:
+      - cs.CL  # Computation and Language
+      - cs.LG  # Machine Learning
+
+# Filtering
+filters:
+  min_downloads: 1000
+  min_stars: 50
+  required_tags:
+    - "transformers"
+    - "pytorch"
+  exclude_orgs:
+    - "test-org"
+
+# Notifications
+notifications:
+  telegram:
+    enabled: false
+    chat_id: ""
+  
+  discord:
+    enabled: false
+    webhook_url: ""
+
+# Storage
+database:
+  path: "./data/scoutforge.db"
+  
+reports:
+  path: "./reports/"
+  format: "markdown"  # markdown, json, html
+
+# Automation
+schedule:
+  sweep_interval: "6h"      # How often to run full sweep
+  digest_time: "09:00"     # Daily digest time
+  weekly_report_day: "sun" # Weekly report day
+
+# ScoutForge Integration
+integration:
+  sovereignstack:
+    enabled: true
+    auto_evaluate: true      # Auto-evaluate models with ACS
+    min_acs_threshold: 0.85  # Auto-pull if ACS > this
+    
+  ollama:
+    enabled: true
+    auto_pull: false         # Auto-pull to Ollama
+    notify_only: true        # Just notify Z
